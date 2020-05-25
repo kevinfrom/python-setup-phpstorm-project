@@ -1,3 +1,8 @@
+# Test files and folders
+__pycache__/
+test/
+*.pyc
+
 # General
 .DS_Store
 .AppleDouble
