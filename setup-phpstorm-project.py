@@ -3,13 +3,33 @@ from tkinter import filedialog
 from tkinter import *
 from functions import *
 
+# Read Phpstorm installation path
+if (os.path.exists('phpstorm.txt')):
+    phpstormPathFile = open('phpstorm.txt', 'r')
+    phpstormPath = phpstormPathFile.read()
+    phpstormPathFile.close()
+else:
+    print('Please select your Phpstorm installation path:')
+    phpstormPath = filedialog.askdirectory()
+    phpstormPathFile = open('phpstorm.txt', 'w')
+    phpstormPathFile.write(phpstormPath)
+    phpstormPathFile.close()
+
 # Get entered domain for path and file naming and prepare files array
 print('Enter domain:')
 domain = input()
 
 # Swap working directory
-print('Set path for projects:')
-path = filedialog.askdirectory()
+if (os.path.exists('projects.txt')):
+    projectsPathFile = open('projects.txt', 'r')
+    projectsPath = projectsPathFile.read()
+    projectsPathFile.close()
+else:
+    print('Set path for projects:')
+    projectsPath = filedialog.askdirectory()
+    projectsPathFile = open('projects.txt', 'w')
+    projectsPathFile.write(projectsPath)
+    projectsPathFile.close()
 
 if os.path.exists(path + '/' + domain + '/.idea') == False:
     if os.path.exists(path + '/' + domain + '/') == False:
@@ -20,14 +40,6 @@ if os.path.exists(path + '/' + domain + '/.idea') == False:
 
 os.chdir(path + '/' + domain + '/.idea/')
 
-
-# If workspace.xml file exists, delete it
-if os.path.exists('workspace.xml'):
-    os.remove('workspace.xml')
-
-# If vcs.xml file exists, delete it
-if os.path.exists('vcs.xml'):
-    os.remove('vcs.xml')
 
 # domain.tld.iml
 domainFile = open(domain + '.iml', 'w')
@@ -54,5 +66,5 @@ phpFile = open('php.xml', 'w')
 phpFile.write(get_php_file_text())
 phpFile.close()
 
-os.chdir('../')
-print('Projected has been created in: ' + os.getcwd())
+phpstormPath = os.path.abspath('"' + phpstormPath + '/bin/phpstorm.bat"')
+#os.system(phpstormPath + ' ' + domain)

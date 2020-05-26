@@ -3,6 +3,10 @@ __pycache__/
 test/
 *.pyc
 
+# Path files
+phpstorm.txt
+projects.txt
+
 # General
 .DS_Store
 .AppleDouble

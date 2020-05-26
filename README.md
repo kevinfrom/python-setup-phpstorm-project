@@ -6,3 +6,9 @@ A python 3 script which setups a Cakephp Phpstorm project, so it doesn't have to
 
 ### Author
 Kevin From <kevinfrom@live.dk> [kevinfrom.dk](https://kevinfrom.dk)
+
+### Todo
+- ~~write all necessary files~~
+- ~~save paths to text files~~
+- open project in phpstorm afterwards (both on windows and mac)
+- add first theme plugin to vcs.xml for Git tracking
