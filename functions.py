@@ -8,9 +8,9 @@ def get_domain_file_text(domain):
 
 
     domainFileText += '\n\t<content url="file://L:/' + domain + '">'
-    domainFileText += '\n\t\t<excludeFolder url="file://L:/' + domain + '/www/app/webroot/_resized">'
-    domainFileText += '\n\t\t<excludeFolder url="file://L:/' + domain + '/www/app/webroot/uploads">'
-    domainFileText += '\n\t\t<excludeFolder url="file://L:/' + domain + '/www/backup">'
+    domainFileText += '\n\t\t<excludeFolder url="file://L:/' + domain + '/www/app/webroot/_resized" />'
+    domainFileText += '\n\t\t<excludeFolder url="file://L:/' + domain + '/www/app/webroot/uploads" />'
+    domainFileText += '\n\t\t<excludeFolder url="file://L:/' + domain + '/www/backup"> /'
     domainFileText += """\n\t</content>
         orderEntry type="inheritedJdk" />
         <orderEntry type="sourceFolder" forTests="false" />
