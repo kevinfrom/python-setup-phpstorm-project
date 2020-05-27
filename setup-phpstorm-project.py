@@ -1,7 +1,7 @@
 import os
 from tkinter import filedialog
-from tkinter import *
 from functions import *
+from subprocess import Popen
 
 # Read Phpstorm installation path
 if (os.path.exists('phpstorm.txt')):
@@ -9,8 +9,8 @@ if (os.path.exists('phpstorm.txt')):
     phpstormPath = phpstormPathFile.read()
     phpstormPathFile.close()
 else:
-    print('Please select your Phpstorm installation path:')
-    phpstormPath = filedialog.askdirectory()
+    print('Please select your Phpstorm executable:')
+    phpstormPath = filedialog.askopenfilename()
     phpstormPathFile = open('phpstorm.txt', 'w')
     phpstormPathFile.write(phpstormPath)
     phpstormPathFile.close()
@@ -31,14 +31,14 @@ else:
     projectsPathFile.write(projectsPath)
     projectsPathFile.close()
 
-if os.path.exists(path + '/' + domain + '/.idea') == False:
-    if os.path.exists(path + '/' + domain + '/') == False:
-        if os.path.exists(path + '/') == False:
-            os.mkdir(path + '/')
-        os.mkdir(path + '/' + domain + '/')
-    os.mkdir(path + '/' + domain + '/.idea/')
+if os.path.exists(projectsPath + '/' + domain + '/.idea') == False:
+    if os.path.exists(projectsPath + '/' + domain + '/') == False:
+        if os.path.exists(projectsPath + '/') == False:
+            os.mkdir(projectsPath + '/')
+        os.mkdir(projectsPath + '/' + domain + '/')
+    os.mkdir(projectsPath + '/' + domain + '/.idea/')
 
-os.chdir(path + '/' + domain + '/.idea/')
+os.chdir(projectsPath + '/' + domain + '/.idea/')
 
 
 # domain.tld.iml
@@ -66,5 +66,7 @@ phpFile = open('php.xml', 'w')
 phpFile.write(get_php_file_text())
 phpFile.close()
 
-phpstormPath = os.path.abspath('"' + phpstormPath + '/bin/phpstorm.bat"')
-#os.system(phpstormPath + ' ' + domain)
+# Open project in Phpstorm
+phpstormPath = os.path.abspath(phpstormPath)
+project = os.path.abspath(projectsPath + '/' + domain)
+Popen([phpstormPath, project])
