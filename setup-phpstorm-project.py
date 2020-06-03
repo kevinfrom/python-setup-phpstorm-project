@@ -66,6 +66,11 @@ phpFile = open('php.xml', 'w')
 phpFile.write(get_php_file_text())
 phpFile.close()
 
+# vcs.xml
+vcsFile = open('vcs.xml', 'w')
+vcsFile.write(get_vcs_file_text(domain))
+vcsFile.close()
+
 # Open project in Phpstorm
 phpstormPath = os.path.abspath(phpstormPath)
 project = os.path.abspath(projectsPath + '/' + domain)

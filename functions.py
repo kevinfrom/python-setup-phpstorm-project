@@ -1,3 +1,5 @@
+import os
+
 def get_domain_file_text(domain):
     domainFileText = """<?xml version="1.0" encoding="UTF-8"?>
     <module type="WEB_MODULE" version="4">
@@ -51,3 +53,16 @@ def get_php_file_text():
 <project version="4">
   <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />
 </project>"""
+
+def get_vcs_file_text(domain):
+  pluginsDirectory = os.path.abspath('L:/' + domain + '/www/app/plugins/')
+  vcsFileText = """<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">"""
+  for dirname in os.listdir(pluginsDirectory):
+    if dirname.find('Theme') != -1:
+      if dirname.find('AdminTheme') == -1:
+        vcsFileText += '<mapping directory="L:/' + domain + '/www/app/plugins/' + dirname + '" vcs="Git" />'
+  vcsFileText += """</component>
+</project>"""
+  return vcsFileText
