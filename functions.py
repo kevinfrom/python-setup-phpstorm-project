@@ -58,11 +58,11 @@ def get_vcs_file_text(domain):
   pluginsDirectory = os.path.abspath('L:/' + domain + '/www/app/plugins/')
   vcsFileText = """<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="VcsDirectoryMappings">"""
+\t<component name="VcsDirectoryMappings">\n"""
   for dirname in os.listdir(pluginsDirectory):
     if dirname.find('Theme') != -1:
       if dirname.find('AdminTheme') == -1:
-        vcsFileText += '<mapping directory="L:/' + domain + '/www/app/plugins/' + dirname + '" vcs="Git" />'
-  vcsFileText += """</component>
+        vcsFileText += '\t\t<mapping directory="L:/' + domain + '/www/app/plugins/' + dirname + '" vcs="Git" />\n'
+  vcsFileText += """\t</component>
 </project>"""
   return vcsFileText
