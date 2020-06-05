@@ -48,10 +48,9 @@ def get_modules_file_text(domain):
     return modulesFileText
 
 def get_php_file_text():
-    # Needs to be php 7.3 due to some developers having downgrade Phpstorm to an older version not supporting 7.4 or higher
     return """<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
 </project>"""
 
 def get_vcs_file_text(domain):
