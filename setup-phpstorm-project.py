@@ -42,34 +42,40 @@ os.chdir(projectsPath + '/' + domain + '/.idea/')
 
 
 # domain.tld.iml
-domainFile = open(domain + '.iml', 'w')
-domainFile.write(get_domain_file_text(domain))
-domainFile.close()
+if os.path.exists(domain + '.iml') == False:
+    domainFile = open(domain + '.iml', 'w')
+    domainFile.write(get_domain_file_text(domain))
+    domainFile.close()
 
 # misc.xml
-miscFile = open('misc.xml', 'w')
-miscFile.write(get_misc_file_text())
-miscFile.close()
+if os.path.exists('misc.xml') == False:
+    miscFile = open('misc.xml', 'w')
+    miscFile.write(get_misc_file_text())
+    miscFile.close()
 
 # encodings.xml
-encodingsFile = open('encodings.xml', 'w')
-encodingsFile.write(get_encodings_file_text())
-encodingsFile.close()
+if os.path.exists('encodings.xml') == False:
+    encodingsFile = open('encodings.xml', 'w')
+    encodingsFile.write(get_encodings_file_text())
+    encodingsFile.close()
 
 # modules.xml
-modulesFile = open('modules.xml', 'w')
-modulesFile.write(get_modules_file_text(domain))
-modulesFile.close()
+if os.path.exists('modules.xml') == False:
+    modulesFile = open('modules.xml', 'w')
+    modulesFile.write(get_modules_file_text(domain))
+    modulesFile.close()
 
 # php.xml
-phpFile = open('php.xml', 'w')
-phpFile.write(get_php_file_text())
-phpFile.close()
+if os.path.exists('php.xml') == False:
+    phpFile = open('php.xml', 'w')
+    phpFile.write(get_php_file_text())
+    phpFile.close()
 
 # vcs.xml
-vcsFile = open('vcs.xml', 'w')
-vcsFile.write(get_vcs_file_text(domain))
-vcsFile.close()
+if os.path.exists('vcs.xml') == False:
+    vcsFile = open('vcs.xml', 'w')
+    vcsFile.write(get_vcs_file_text(domain))
+    vcsFile.close()
 
 # Open project in Phpstorm
 phpstormPath = os.path.abspath(phpstormPath)
