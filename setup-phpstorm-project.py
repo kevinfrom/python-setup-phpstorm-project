@@ -1,4 +1,5 @@
 import os
+import sys
 from tkinter import filedialog
 from functions import *
 from subprocess import Popen
@@ -16,8 +17,11 @@ else:
     phpstormPathFile.close()
 
 # Get entered domain for path and file naming and prepare files array
-print('Enter domain:')
-domain = input()
+if (sys.argv[1]):
+    domain = sys.argv[1]
+else:
+    print('Enter domain:')
+    domain = input()
 
 # Swap working directory
 if (os.path.exists('projects.txt')):
