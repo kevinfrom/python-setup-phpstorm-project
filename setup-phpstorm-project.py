@@ -16,12 +16,9 @@ else:
     phpstormPathFile.write(phpstormPath)
     phpstormPathFile.close()
 
-# Get entered domain for path and file naming and prepare files array
-if (sys.argv[1]):
-    domain = sys.argv[1]
-else:
-    print('Enter domain:')
-    domain = input()
+# Get domain
+print('Enter domain:')
+domain = input()
 
 # Swap working directory
 if (os.path.exists('projects.txt')):
