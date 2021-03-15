@@ -1,25 +1,65 @@
 import os
+import shutil
+import json
+
+
+def get_config():
+    if not os.path.exists('config.json'):
+        shutil.copy('config.example.json', 'config.json')
+        print('INFO! Please update your config.json')
+        exit()
+
+    # Load config and check if needed keys is set
+    with open('config.json') as config_json:
+        config = json.load(config_json)
+
+        # Check if necessary keys are set in config.json
+        if "projects" in config == False:
+            exit('ERROR !Projects path is not set in config.json')
+
+        if "phpstorm" in config == False:
+            exit('ERROR! Phpstorm path is not set in config.json')
+
+        # Get phpstorm executable
+        if "phpstorm64.exe" in os.scandir(config['phpstorm']):
+            if "phpstorm64.exe" not in config['phpstorm']:
+                config['phpstorm'] += '/phpstorm64.exe'
+        else:
+            for root, dirs, files in os.walk(config['phpstorm'], topdown=True):
+                for name in files:
+                    path = os.path.join(root, name)
+                    if "phpstorm64.exe" in path:
+                        config['phpstorm'] = path
+                        break
+                for name in dirs:
+                    path = os.path.join(root, name)
+                    if "phpstorm64.exe" in path:
+                        config['phpstorm'] = path
+                        break
+
+        return config
+
 
 def get_domain_file_text(domain):
-    domainFileText = """<?xml version="1.0" encoding="UTF-8"?>
+    domain_file_text = """<?xml version="1.0" encoding="UTF-8"?>
     <module type="WEB_MODULE" version="4">
       <component name="NewModuleRootManager">
         <content url="file://$MODULE_DIR$">
           <excludeFolder url="file://$MODULE_DIR$" />
         </content>"""
 
-
-    domainFileText += '\n\t<content url="file://L:/' + domain + '">'
-    domainFileText += '\n\t\t<excludeFolder url="file://L:/' + domain + '/www/app/webroot/_resized" />'
-    domainFileText += '\n\t\t<excludeFolder url="file://L:/' + domain + '/www/app/webroot/uploads" />'
-    domainFileText += '\n\t\t<excludeFolder url="file://L:/' + domain + '/www/backup" />'
-    domainFileText += """\n\t</content>
+    domain_file_text += '\n\t<content url="file://L:/' + domain + '">'
+    domain_file_text += '\n\t\t<excludeFolder url="file://L:/' + domain + '/www/app/webroot/_resized" />'
+    domain_file_text += '\n\t\t<excludeFolder url="file://L:/' + domain + '/www/app/webroot/uploads" />'
+    domain_file_text += '\n\t\t<excludeFolder url="file://L:/' + domain + '/www/backup" />'
+    domain_file_text += """\n\t</content>
         <orderEntry type="inheritedJdk" />
         <orderEntry type="sourceFolder" forTests="false" />
       </component>
     </module>"""
 
-    return domainFileText
+    return domain_file_text
+
 
 def get_misc_file_text():
     return """<?xml version="1.0" encoding="UTF-8"?>
@@ -29,11 +69,13 @@ def get_misc_file_text():
   </component>
 </project>"""
 
+
 def get_encodings_file_text():
     return """<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" addBOMForNewFiles="with NO BOM" />
 </project>"""
+
 
 def get_modules_file_text(domain):
     modulesFileText = """<?xml version="1.0" encoding="UTF-8"?>
@@ -47,21 +89,23 @@ def get_modules_file_text(domain):
 
     return modulesFileText
 
+
 def get_php_file_text():
     return """<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
 </project>"""
 
+
 def get_vcs_file_text(domain):
-  pluginsDirectory = os.path.abspath('L:/' + domain + '/www/app/plugins/')
-  vcsFileText = """<?xml version="1.0" encoding="UTF-8"?>
+    plugins_directory = os.path.abspath('L:/' + domain + '/www/app/plugins/')
+    vcs_file_text = """<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
 \t<component name="VcsDirectoryMappings">\n"""
-  for dirname in os.listdir(pluginsDirectory):
-    if dirname.find('Theme') != -1:
-      if dirname.find('AdminTheme') == -1:
-        vcsFileText += '\t\t<mapping directory="L:/' + domain + '/www/app/plugins/' + dirname + '" vcs="Git" />\n'
-  vcsFileText += """\t</component>
+    for dirname in os.listdir(plugins_directory):
+        if dirname.find('Theme') != -1:
+            if dirname.find('AdminTheme') == -1:
+                vcs_file_text += '\t\t<mapping directory="L:/' + domain + '/www/app/plugins/' + dirname + '" vcs="Git" />\n'
+    vcs_file_text += """\t</component>
 </project>"""
-  return vcsFileText
+    return vcs_file_text

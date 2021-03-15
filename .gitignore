@@ -61,3 +61,6 @@ $RECYCLE.BIN/
 
 # IDE
 .idea
+
+# Config
+config.json
