@@ -13,4 +13,5 @@ Kevin From <kevinfrom@live.dk> [kevinfrom.dk](https://kevinfrom.dk)
 - ~~open project in phpstorm afterwards (both on windows and mac)~~
 - ~~add first theme plugin to vcs.xml for Git tracking~~
 - ~~don't overwrite files if they already exist~~
+- automatically detect highest version of installed PhpStorm 
 - if no domain given, scan drive for all projects and create configs
