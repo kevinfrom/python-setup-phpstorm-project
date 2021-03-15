@@ -1,11 +1,15 @@
 # Setup PhpStorm project
 A python 3 script which setups a Cakephp Phpstorm project, so it doesn't have to be done manually.
 
+## Installation
+1. Install python3 using your prefered method - Windows Appstore, direct download, Chocolatey.
+2. Install project packages using pip: ``pip install -r requirements.txt``
+
 ## Usage
-``python setup-phpstorm-project.py`` and follow instructions given in the terminal.
+Execute ``python setup-phpstorm-project.py`` and follow instructions given in the terminal.
 
 ### Author
-Kevin From <kevinfrom@live.dk> [kevinfrom.dk](https://kevinfrom.dk)
+Kevin From <kevinfrom@live.dk> 
 
 ### Todo
 - ~~write all necessary files~~
