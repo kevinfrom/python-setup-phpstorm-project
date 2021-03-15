@@ -1,5 +1,7 @@
 from functions import *
 from subprocess import Popen
+from win10toast import ToastNotifier
+toast = ToastNotifier()
 
 # Get config
 config = get_config()
@@ -7,6 +9,10 @@ config = get_config()
 # Get domain
 print('Enter domain:')
 domain = input()
+
+if not os.path.exists('L:/' + domain):
+    toast.show_toast('ERROR!', 'L:/' + domain + ' does not exist!')
+    exit(1)
 
 if not os.path.exists(config['projects'] + '/' + domain + '/.idea'):
     if not os.path.exists(config['projects'] + '/' + domain + '/'):
@@ -55,5 +61,9 @@ if not os.path.exists('vcs.xml'):
 
 # Open project in Phpstorm
 config['phpstorm'] = os.path.abspath(config['phpstorm'])
+if not os.path.exists(config['phpstorm']):
+    toast.show_toast('ERROR!', 'Phpstorm path does not exist')
+    exit()
+
 project = os.path.abspath(config['projects'] + '/' + domain)
 Popen([config['phpstorm'], project])

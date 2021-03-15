@@ -1,24 +1,28 @@
 import os
 import shutil
 import json
+from win10toast import ToastNotifier
+toast = ToastNotifier()
 
 
 def get_config():
     if not os.path.exists('config.json'):
         shutil.copy('config.example.json', 'config.json')
-        print('INFO! Please update your config.json')
-        exit()
+        toast.show_toast('INFO!', 'Please update your config.json')
+        exit(1)
 
     # Load config and check if needed keys is set
     with open('config.json') as config_json:
         config = json.load(config_json)
 
         # Check if necessary keys are set in config.json
-        if "projects" in config == False:
-            exit('ERROR !Projects path is not set in config.json')
+        if "projects" not in config:
+            toast.show_toast('ERROR!', 'Projects path is not set in config.json')
+            exit(1)
 
-        if "phpstorm" in config == False:
-            exit('ERROR! Phpstorm path is not set in config.json')
+        if "phpstorm" not in config:
+            toast.show_toast('ERROR!', 'Phpstorm path is not set in config.json')
+            exit(1)
 
         # Get phpstorm executable
         if "phpstorm64.exe" in os.scandir(config['phpstorm']):
