@@ -5,6 +5,19 @@ A python 3 script which setups a Cakephp Phpstorm project, so it doesn't have to
 1. Install python3 using your prefered method - Windows Appstore, direct download, Chocolatey.
 2. Install project packages using pip: ``pip install -r requirements.txt``
 
+## Configuration
+
+Make sure your projects path and toolbox phpstorm apps path is set correctly in `config.json`.
+
+Example config (also found in `config.example.json`):
+
+```json
+{
+  "projects": "C:/Phpstorm",
+  "phpstorm": "C:/Users/[USERNAME]/AppData/Local/JetBrains/Toolbox/apps/PhpStorm/ch-0"
+}
+```
+
 ## Usage
 Execute ``python setup-phpstorm-project.py`` and follow instructions given in the terminal.
 
