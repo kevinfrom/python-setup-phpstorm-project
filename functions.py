@@ -97,7 +97,9 @@ def get_modules_file_text(domain):
 def get_php_file_text():
     return """<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.4">
+    <option name="suggestChangeDefaultLanguageLevel" value="false" />
+  </component>
 </project>"""
 
 
