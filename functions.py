@@ -69,7 +69,7 @@ def get_misc_file_text():
     return """<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptSettings">
-    <option name="languageLevel" value="ES5" />
+    <option name="languageLevel" value="ES6" />
   </component>
 </project>"""
 
