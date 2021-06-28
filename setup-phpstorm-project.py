@@ -1,7 +1,5 @@
 from functions import *
 from subprocess import Popen
-from win10toast import ToastNotifier
-toast = ToastNotifier()
 
 # Get config
 config = get_config()
@@ -10,8 +8,8 @@ config = get_config()
 print('Enter domain:')
 domain = input()
 
-if not os.path.exists('L:/' + domain):
-    toast.show_toast('ERROR!', 'L:/' + domain + ' does not exist!')
+if not os.path.exists(config['drive_path'] + '/' + domain):
+    print('ERROR!', config['drive_path'] + '/' + domain + ' does not exist!')
     exit(1)
 
 if not os.path.exists(config['projects'] + '/' + domain + '/.idea'):
@@ -26,7 +24,7 @@ os.chdir(config['projects'] + '/' + domain + '/.idea/')
 # domain.tld.iml
 if not os.path.exists(domain + '.iml'):
     domainFile = open(domain + '.iml', 'w')
-    domainFile.write(get_domain_file_text(domain))
+    domainFile.write(get_domain_file_text(config, domain))
     domainFile.close()
 
 # misc.xml
@@ -56,14 +54,21 @@ if not os.path.exists('php.xml'):
 # vcs.xml
 if not os.path.exists('vcs.xml'):
     vcsFile = open('vcs.xml', 'w')
-    vcsFile.write(get_vcs_file_text(domain))
+    vcsFile.write(get_vcs_file_text(config, domain))
     vcsFile.close()
 
 # Open project in Phpstorm
 config['phpstorm'] = os.path.abspath(config['phpstorm'])
 if not os.path.exists(config['phpstorm']):
-    toast.show_toast('ERROR!', 'Phpstorm path does not exist')
+    print('ERROR!', 'Phpstorm path does not exist')
     exit()
 
 project = os.path.abspath(config['projects'] + '/' + domain)
-Popen([config['phpstorm'], project])
+
+if config['os'] == 'windows':
+    Popen([config['phpstorm'], project])
+elif config['os'] == 'mac':
+    os.system('phpstorm ' + project)
+else:
+    print('ERROR!', 'OS ' + config['os'] + ' not supported')
+    exit(1)
