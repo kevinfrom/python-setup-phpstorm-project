@@ -1,16 +1,18 @@
 import os
-import shutil
-import json
+from shutil import copy
+from json import load
+from os.path import exists, join, abspath
+from os import scandir, walk, listdir
 
 def get_config():
-    if not os.path.exists('config.json'):
-        shutil.copy('config.example.json', 'config.json')
+    if not exists('config.json'):
+        copy('config.example.json', 'config.json')
         print('INFO!', 'Please update your config.json')
         exit(1)
 
     # Load config and check if needed keys is set
     with open('config.json') as config_json:
-        config = json.load(config_json)
+        config = load(config_json)
 
         # Check if necessary keys are set in config.json
         if "os" not in config:
@@ -30,14 +32,14 @@ def get_config():
             exit(1)
 
         # Get phpstorm executable
-        if "phpstorm64.exe" in os.scandir(config['phpstorm']) and "phpstorm64.exe" not in config['phpstorm']:
+        if "phpstorm64.exe" in scandir(config['phpstorm']) and "phpstorm64.exe" not in config['phpstorm']:
             config['phpstorm'] += '/phpstorm64.exe'
-        elif "PhpStorm.app" in os.scandir(config['phpstorm']) and "PhpStorm.app" not in config['phpstorm']:
+        elif "PhpStorm.app" in scandir(config['phpstorm']) and "PhpStorm.app" not in config['phpstorm']:
             config['phpstorm'] += '/PhpStorm.app'
         else:
-            for root, dirs, files in os.walk(config['phpstorm'], topdown=True):
+            for root, dirs, files in walk(config['phpstorm'], topdown=True):
                 for name in files:
-                    path = os.path.join(root, name)
+                    path = join(root, name)
                     if "phpstorm64.exe" == name:
                         config['phpstorm'] = path
                         break
@@ -45,7 +47,7 @@ def get_config():
                         config['phpstorm'] = path
                         break
                 for name in dirs:
-                    path = os.path.join(root, name)
+                    path = join(root, name)
                     if "phpstorm64.exe" == name:
                         config['phpstorm'] = path
                         break
@@ -116,11 +118,11 @@ def get_php_file_text():
 
 
 def get_vcs_file_text(config, domain):
-    plugins_directory = os.path.abspath(config['drive_path'] + '/' + domain + '/www/app/plugins/')
+    plugins_directory = abspath(config['drive_path'] + '/' + domain + '/www/app/plugins/')
     vcs_file_text = """<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
 \t<component name="VcsDirectoryMappings">\n"""
-    for dirname in os.listdir(plugins_directory):
+    for dirname in listdir(plugins_directory):
         if dirname.find('Theme') != -1:
             if dirname.find('AdminTheme') == -1:
                 vcs_file_text += '\t\t<mapping directory="' + config['drive_path'] + '/' + domain + '/www/app/plugins/' + dirname + '" vcs="Git" />\n'
