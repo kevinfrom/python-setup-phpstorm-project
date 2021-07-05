@@ -2,6 +2,7 @@ from functions import *
 from subprocess import Popen
 from os.path import dirname, abspath, curdir, exists
 from os import chdir, mkdir, system
+from sys import argv
 
 # Make sure current working directory is parent directory of this script
 if not abspath(dirname(__file__)) == curdir:
@@ -11,8 +12,11 @@ if not abspath(dirname(__file__)) == curdir:
 config = get_config()
 
 # Get domain
-print('Enter domain:')
-domain = input()
+if len(argv) > 1:
+    domain = argv[1]
+else:
+    print("Enter domain: ")
+    domain = input()
 
 if not exists(config['drive_path'] + '/' + domain):
     print('ERROR!', config['drive_path'] + '/' + domain + ' does not exist!')
